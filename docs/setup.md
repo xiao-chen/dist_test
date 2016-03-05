@@ -74,6 +74,7 @@ Next, create a configuration file at `~/.dist_test.cnf` that looks like the foll
         [dist_test]
         master=http://localhost:8081/
         allowed_ip_ranges=0.0.0.0/0
+        result_server=http://localhost:8080/ (Optional. Only needed for failure rate calculation)
 
 Adjust `isolate.home` to point within your luci-py repo. The client folder should have a `run_isolated.py` file that is the key functionality we're using.
 
