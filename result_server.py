@@ -363,16 +363,22 @@ class TRServer(object):
   def flaky_report_html(self):
     """ Return an HTML report of recently flaky tests """
     c = self._execute_query(
-              """SELECT
-                   test_name,
+                  """SELECT DISTINCT test_name
+                    FROM dist_test_results
+                    WHERE timestamp > NOW() - INTERVAL 1 WEEK AND status != 0
+                    ORDER BY test_name""")
+    names = c.fetchall()
+
+    query_string = """SELECT test_name,
                    DATEDIFF(NOW(), timestamp) AS days_ago,
                    SUM(IF(status != 0, 1, 0)) AS num_failures,
                    COUNT(*) AS num_runs
                  FROM dist_test_results
-                 WHERE timestamp > NOW() - INTERVAL 1 WEEK
-                 GROUP BY test_name, days_ago
-                 HAVING num_failures > 0
-                 ORDER BY test_name""")
+                 WHERE timestamp > NOW() - INTERVAL 1 WEEK AND test_name in"""\
+                   + "('" + "','".join(str(n['test_name']) for n in names) + "')"\
+                   + """GROUP BY test_name, days_ago
+                   ORDER BY test_name"""
+    c = self._execute_query(query_string)
     rows = c.fetchall()
 
     results = []
