@@ -83,7 +83,8 @@ class TRServer(object):
         log_key varchar(256),
         INDEX (job_id),
         INDEX (test_name),
-        INDEX (timestamp)
+        INDEX (timestamp),
+        INDEX (status)
       );""")
 
   def _execute_query(self, query, *args, **kwargs):
@@ -365,8 +366,7 @@ class TRServer(object):
     c = self._execute_query(
                   """SELECT DISTINCT test_name
                     FROM dist_test_results
-                    WHERE timestamp > NOW() - INTERVAL 1 WEEK AND status != 0
-                    ORDER BY test_name""")
+                    WHERE timestamp > NOW() - INTERVAL 1 WEEK AND status != 0""")
     names = c.fetchall()
 
     query_string = """SELECT test_name,
