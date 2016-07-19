@@ -38,6 +38,7 @@ import uuid
 import xml.etree.ElementTree as ET
 import contextlib
 import zipfile
+from operator import itemgetter
 
 LOG = None
 
@@ -409,6 +410,7 @@ class TRServer(object):
                           failures_2day=failures_2day,
                           sparkline=",".join("%.2f" % p for p in sparkline)))
 
+      results = sorted(results, key=itemgetter('failures_7day'), reverse=True)
     return Template("""
     <h1>Flaky rate over last week</h1>
     <table class="table" id="flaky-rate">
