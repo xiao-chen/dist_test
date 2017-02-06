@@ -17,7 +17,7 @@ if [[ ! -e "$hash_file" || "$git_hash" != "$(cat $hash_file)" ]]; then
     echo "Initializing virtualenv"
     pushd "$ENV"
     virtualenv "$env_name"
-    for package in cherrypy jinja2 MySQL-python boto glob2; do
+    for package in beanstalkc cherrypy jinja2 MySQL-python boto glob2 PyYAML; do
         "./$env_name/bin/pip" install $package
     done
     virtualenv --relocatable "$env_name"

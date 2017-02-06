@@ -89,6 +89,10 @@ Start the master and one or more slaves:
         $ ./bin/server
         $ ./bin/slave
 
+Optionally, start the result server:
+
+        $ ./bin/result_server
+
 `dist_test` will create the required tables in MySQL on first run.
 
 ## Client setup

@@ -23,21 +23,26 @@
 
 import boto
 import cherrypy
-from config import Config
+import contextlib
 import cStringIO
-from cStringIO import StringIO
 import itertools
-from jinja2 import Template
 import logging
 import MySQLdb
 import os
-import parse_test_failure
+import sys
 import threading
 import time
 import uuid
 import xml.etree.ElementTree as ET
-import contextlib
 import zipfile
+
+
+sys.path = [os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "../grind/python/disttest"))] + sys.path
+import parse_test_failure
+
+from config import Config
+from cStringIO import StringIO
+from jinja2 import Template
 from operator import itemgetter
 
 LOG = None

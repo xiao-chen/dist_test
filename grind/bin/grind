@@ -504,7 +504,8 @@ class TestRunner:
             if job_id is None:
               raise Exception("job_id not found, cannot submit result")
             # Call the dist_test client submit
-            submit_script_path = os.path.join(os.path.dirname(self.config.dist_test_client_path), "submit_results.py")
+            grind_dir =  os.path.abspath(os.path.join(self.config.dist_test_client_path, "../.."))
+            submit_script_path = os.path.join(grind_dir, "infra/submit_results.py")
             cmd = [submit_script_path, "--jobid", job_id]
             logger.info("Calling %s", " ".join(cmd))
             p = subprocess.Popen(cmd, env=isolate_env)
