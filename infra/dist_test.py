@@ -179,10 +179,11 @@ class ResultsStore(object):
           self.thread_local.db is not None:
       return self.thread_local.db
     self.thread_local.db = MySQLdb.connect(
-      self.config.MYSQL_HOST,
-      self.config.MYSQL_USER,
-      self.config.MYSQL_PWD,
-      self.config.MYSQL_DB)
+      host=self.config.MYSQL_HOST,
+      port=self.config.MYSQL_PORT,
+      user=self.config.MYSQL_USER,
+      passwd=self.config.MYSQL_PWD,
+      db=self.config.MYSQL_DB)
     logging.info("Connected to MySQL at %s" % self.config.MYSQL_HOST)
     self.thread_local.db.autocommit(True)
     return self.thread_local.db
